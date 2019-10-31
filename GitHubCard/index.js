@@ -2,6 +2,10 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+axios.get('https://api.github.com/users/taylorbcool')
+  .then((response) => {
+    createCard(response)
+  });
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -13,6 +17,7 @@
 /* Step 4: Pass the data received from Github into your function, 
            create a new component and add it to the DOM as a child of .cards
 */
+
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
           follow this link in your browser https://api.github.com/users/<Your github name>/followers 
@@ -45,6 +50,55 @@ const followersArray = [];
 </div>
 
 */
+
+function createCard(object) {
+  // creates all variables
+  const 
+    cards = document.querySelector('.cards'),
+    card = document.createElement('div'),
+    cardImage = document.createElement('img'),
+    cardInfo = document.createElement('div')
+    cardName = document.createElement('h3'), 
+    cardUsername = document.createElement('p'),
+    cardLocation = document.createElement('p'),
+    cardProfile = document.createElement('p'),
+    cardProfileURL = document.createElement('a'), 
+    cardFollowers = document.createElement('p'),
+    cardFollowing = document.createElement('p'),
+    cardBio = document.createElement('p');
+
+  // appends variables to their parents
+  cards.appendChild(card);
+  card.appendChild(cardImage);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(cardUsername);
+  cardInfo.appendChild(cardLocation);
+  cardInfo.appendChild(cardProfile);
+  cardInfo.appendChild(cardFollowers);
+  cardInfo.appendChild(cardFollowing);
+  cardInfo.appendChild(cardBio);
+  cardProfile.appendChild(cardProfileURL);
+
+  // adds classes to elements
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  cardName.classList.add('name');
+  cardUsername.classList.add('username');
+
+  // fills in card information
+  cardImage.src = object.avatar_url;
+  cardName.textContent = object.name;
+  cardUsername.textContent = object.login;
+  cardLocation.textContent = object.location;
+  cardProfile.textContent = 'Profile:';
+  cardProfileURL.href = object.html_url;
+  cardProfileURL.textContent = object.html_url;
+  cardFollowers.innerHTML = `Followers: ${object.followers}`;
+  cardFollowing.innerHTML = `Following: ${object.following}`;
+  cardBio.textContent = object.bio;
+
+  return card
+};
 
 /* List of LS Instructors Github username's: 
   tetondan
