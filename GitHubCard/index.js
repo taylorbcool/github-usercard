@@ -34,21 +34,22 @@ axios.get('https://api.github.com/users/taylorbcool/followers')
   .then((response) => {
     response.data.forEach((item) => {
       followersArray.push(item.login);
+      })
+      followersArray.forEach((item) => {
+        axios.get(`https://api.github.com/users/${item}`)
+          .then((response) => {
+            // console.log(response.data.avatar_url);
+            createCard(response);
+          })
+          .catch((error) => {
+            console.log('Could not get follower data; ' + error)
+          })
     })
   })
   .catch((error) => {
     console.log('Followers data was not returned; ' + error)
   });
-console.log(followersArray);
-followersArray.forEach((item) => {
-  axios.get(`https://api.github.com/users/${item}`)
-    .then((response) => {
-      createCard(response);
-    })
-    .catch((error) => {
-      console.log('Could not get follower data; ' + error)
-    })
-})
+
 /* Step 3: Create a function that accepts a single object.data as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
